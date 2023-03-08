@@ -1,5 +1,5 @@
 import { db } from "../database/database.js";
-import { signInSchema } from "../model/signIn.Schema.js";
+import { signInSchema } from "../models/signIn.Schema.js";
 
 export async function signInValidation(req, res, next) {
   const user = req.body;

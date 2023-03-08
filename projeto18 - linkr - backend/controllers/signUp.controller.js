@@ -7,10 +7,10 @@ export async function postSignUp(req, res) {
     const hashPassword = bcrypt.hashSync(password, 10);
     await db.query(
       `
-    INSERT INTO ___ (email, password, username, "pictureUrl" )
+    INSERT INTO users (email, password, username, "pictureUrl")
     VALUES ($1, $2, $3, $4)
     `,
-      [email, password, username, pictureUrl]
+      [email, hashPassword, username, pictureUrl]
     );
     res.sendStatus(201);
   } catch (err) {

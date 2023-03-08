@@ -4,6 +4,6 @@ import { postSignUpValidation } from "../middleware/signUp.middleware.js";
 
 const signUpRouter = Router()
 
-signUpRouter.post("/sign-up", postSignUp)
+signUpRouter.post("/sign-up", postSignUpValidation, postSignUp)
 
 export default signUpRouter

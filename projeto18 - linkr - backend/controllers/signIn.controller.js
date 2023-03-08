@@ -6,13 +6,13 @@ export async function postSignIn(req, res) {
   const { email, password } = res.locals.signIn;
   try {
     const user = await db.query(
-    `
-    SELECT * FROM ___ WHERE email=$1
+      `
+    SELECT * FROM users WHERE email=$1
     `,
       [email]
     );
     if (user.rows[0] === undefined) {
-        return res.sendStatus(401);
+      return res.sendStatus(401);
     }
     const comparePassword = bcrypt.compareSync(password, user.rows[0].password);
     if (!comparePassword) {
@@ -22,7 +22,7 @@ export async function postSignIn(req, res) {
     const userId = user.rows[0].id;
     await db.query(
       `
-            INSERT INTO sessions (token, "userId")
+            INSERT INTO sessions (token, "idUsers")
             VALUES ($1, $2)
             `,
       [token, userId]
