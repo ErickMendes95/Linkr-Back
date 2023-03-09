@@ -23,6 +23,7 @@ export async function postSignIn(req, res) {
     await db.query(
       `
             INSERT INTO sessions (token, userid)
+
             VALUES ($1, $2)
             `,
       [token, userId]
