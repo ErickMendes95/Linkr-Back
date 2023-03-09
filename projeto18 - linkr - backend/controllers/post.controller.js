@@ -1,19 +1,34 @@
 export async function createPost(req, res) {
     const { authorization } = req.headers
     const token = authorization?.replace("Bearer ", '')
+    let title = ""
+    let descriptionUrl = ""
+    let image = ""
 
     const { url, description} = req.body
 
     const {user} = res.locals
 
-    const shortUrl = nanoid(8)
+    const metadata = require('url-metadata');
+
+    metadata(`${url}`).then(
+    function (metadata) { 
+   title = metadata.title;
+   descriptionUrl = metadata.description;
+    image = metadata.image; 
+    },
+    function (error) { 
+        console.log(error);
+    }
+)
 
     try {
-      await db.query('INSERT INTO urls (id_user, url, description) values ($1, $2, $3', [user.rows[0].id, url, description ])
+      const postUrl = await db.query('INSERT INTO urls (url, title, "descriptionUrl", image) values ($1, $2, $3, $4)', [url, title, descriptionUrl, image ])
 
-      const post = await db.query('SELECT * FROM posts WHERE short_url=$1', [shortUrl])
+      await db.query('INSERT INTO posts (description, "urlId", "userId") values ($1, $2, $3)', [description, postUrl.rows[0].id, user.rows[0].id, url, description ])
 
-      res.status(201).send({ AQUI VEM AS INFOS DO LINK SERÁ?})
+
+      res.sendStatus(201)
 
     } catch (error) {
       console.log(error)

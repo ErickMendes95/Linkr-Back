@@ -1,24 +1,24 @@
-// export async function authRoutesValidation(req, res, next) {
-//     const { authorization } = req.headers
-//     const token = authorization?.replace("Bearer ", "")
+export async function authValidation(req, res, next) {
+    const { authorization } = req.headers
+    const token = authorization?.replace("Bearer ", "")
   
-//     if (!token) return res.status(401).send("Não autorizado")
+    if (!token) return res.status(401).send("Não autorizado")
   
-//     try {
-//       const session = await db.query('SELECT * FROM sessions WHERE token =$1', [token])
-//       if (session.rowCount === 0) return res.status(401).send("Não autorizado")
+    try {
+      const session = await db.query('SELECT * FROM sessions WHERE token =$1', [token])
+      if (session.rowCount === 0) return res.status(401).send("Não autorizado")
 
-//       const user = await db.query('SELECT * FROM users WHERE id =$1', [session.rows[0].id_user])
+      const user = await db.query('SELECT * FROM users WHERE id =$1', [session.rows[0].id_user])
   
-//       if (!user) return res.status(401).send("Não autorizado")
+      if (!user) return res.status(401).send("Não autorizado")
   
-//       res.locals.user = user
+      res.locals.user = user
+      
+    next()
   
-//     } catch (error) {
-//       console.erro(error)
-//       res.status(500).send(error)
-//     }
+    } catch (error) {
+      console.erro(error)
+      res.status(500).send(error)
+    }
   
-//     next()
-  
-//   }
+  }
