@@ -1,6 +1,10 @@
+
 import { db } from '../database/database.js'
 
 import urlMetadata from 'url-metadata';
+
+import {getTrends} from '../repositories/getTrends.js';
+
 
 export async function createPost(req, res) {
     const { authorization } = req.headers
@@ -57,9 +61,11 @@ export async function createPost(req, res) {
             };
           })
 
-          console.log(posts)
-
-          res.send(posts)
+          if(arrayTrends.length === 0){
+            return res.sendStatus(404)
+          }
+      
+          res.send(posts, arrayTrends)
       
         } catch (error) {
           res.status(500).send(error.message)
