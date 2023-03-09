@@ -22,7 +22,7 @@ export async function postSignIn(req, res) {
     const userId = user.rows[0].id;
     await db.query(
       `
-            INSERT INTO sessions (token, "idUsers")
+            INSERT INTO sessions (token, userid)
             VALUES ($1, $2)
             `,
       [token, userId]
