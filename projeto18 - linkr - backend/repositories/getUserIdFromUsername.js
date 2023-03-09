@@ -1,4 +1,4 @@
-import { db } from "../database/database";
+import { db } from "../database/database.js";
 
 export async function getUserIdFromUsername(username){
     const {rows} = await db.query(`SELECT id from user where username=$1`,[username]);

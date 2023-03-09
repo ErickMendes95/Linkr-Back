@@ -1,5 +1,5 @@
 import { getPostsFromUserId } from "../repositories/getPostsFromUserId";
-import { getTrends } from "../repositories/getTrends.js"
+import { getTrends } from "../repositories/getTrends"
 
 export async function getUserPosts(req, res) {
 
