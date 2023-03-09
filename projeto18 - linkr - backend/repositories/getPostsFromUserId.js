@@ -7,7 +7,11 @@ export async function getPostsFromUserId(id){
     FROM posts 
     WHERE id= $1
     `, [id]
-    ) 
-    return rows;
+    )
+    const posts = []
+    rows.map((r) => {
+        posts.push(r)
+    })
+    return posts;
 
 }

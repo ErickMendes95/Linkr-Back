@@ -3,8 +3,6 @@ import { db } from '../database/database.js'
 
 import urlMetadata from 'url-metadata';
 
-import {getTrends} from '../repositories/getTrends.js';
-
 
 export async function createPost(req, res) {
     const { authorization } = req.headers
@@ -40,7 +38,6 @@ export async function createPost(req, res) {
 
   export async function getTimeline(req, res) {
 
-
         try {
           const result = await db.query(
             'SELECT posts.*, urls.id AS url_id, urls.url AS url, urls.title AS title, urls.descriptionUrl AS description_url, urls.image AS image, users.id AS user_id, users.username AS name FROM posts JOIN urls ON posts.urlId = urls.id JOIN users ON posts.userId = users.id ORDER BY posts.createdAt DESC LIMIT 20')
@@ -60,12 +57,8 @@ export async function createPost(req, res) {
               }
             };
           })
-
-          if(arrayTrends.length === 0){
-            return res.sendStatus(404)
-          }
       
-          res.send(posts, arrayTrends)
+          res.send(posts)
       
         } catch (error) {
           res.status(500).send(error.message)

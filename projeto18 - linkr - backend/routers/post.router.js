@@ -10,6 +10,4 @@ const postRouter = Router()
 postRouter.post("/home", authValidation, validateSchema(postSchema), createPost)
 postRouter.get("/home", authValidation, getTimeline)
 
-
-
 export default postRouter  
