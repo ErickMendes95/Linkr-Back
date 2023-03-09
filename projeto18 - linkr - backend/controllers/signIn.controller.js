@@ -12,11 +12,11 @@ export async function postSignIn(req, res) {
       [email]
     );
     if (user.rows[0] === undefined) {
-      return res.sendStatus(401);
+      return res.status(401).send('Email ou senha incorreto!');
     }
     const comparePassword = bcrypt.compareSync(password, user.rows[0].password);
     if (!comparePassword) {
-      return res.sendStatus(401);
+      return res.status(401).send('Email ou senha incorreto!');
     }
     const token = uuidV4();
     const userId = user.rows[0].id;
@@ -27,7 +27,7 @@ export async function postSignIn(req, res) {
             `,
       [token, userId]
     );
-    res.send({ token }).status(201);
+    res.send({ token, userId }).status(201);
   } catch (err) {
     res.status(500).send(err.message);
   }
