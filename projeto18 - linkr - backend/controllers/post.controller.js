@@ -1,4 +1,4 @@
-import {getTrends} from '../repositories/getTrends';
+import {getTrends} from '../repositories/getTrends.js';
 
 export async function createPost(req, res) {
     const { authorization } = req.headers
