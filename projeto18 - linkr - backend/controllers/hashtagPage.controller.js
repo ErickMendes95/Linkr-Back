@@ -1,5 +1,5 @@
-import { getPostsFromHashtag } from "../repositories/getPostsFromHashtag";
-import { getTrends } from "../repositories/getTrends"
+import { getPostsFromHashtag } from "../repositories/getPostsFromHashtag.js";
+import { getTrends } from "../repositories/getTrends.js"
 
 export async function getHashtagsPosts(req, res) {
 
