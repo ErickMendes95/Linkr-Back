@@ -18,7 +18,7 @@ export async function searchUser(req, res){
 
     const { username } = req.query;
 
-    const users = await db.query("SELECT users.id, users.username, users.pictureurl FROM users WHERE username ILIKE $1", [`%${username}%`]);
+    const users = await db.query("SELECT users.id, users.username, users.picture_url FROM users WHERE username ILIKE $1", [`%${username}%`]);
     
     if(users.rowCount === 0) return res.sendStatus(404);
     
