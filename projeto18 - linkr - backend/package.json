@@ -19,6 +19,8 @@
     "joi": "^17.8.3",
     "nodemon": "^2.0.21",
     "pg": "^8.10.0",
+    "url-metadata": "^2.5.0",
+    "url-metadata-parser": "^1.0.8",
     "uuid": "^9.0.0"
   }
 }
