@@ -14,3 +14,18 @@ export async function getUserById(req, res){
     }
 }
 
+export async function searchUser(req, res){
+
+    const { username } = req.query;
+
+    const users = await db.query("SELECT users.id, users.username, users.pictureurl FROM users WHERE username ILIKE $1", [`%${username}%`]);
+    
+    if(users.rowCount === 0) return res.sendStatus(404);
+    
+    try {
+        res.status(200).send(users.rows);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
