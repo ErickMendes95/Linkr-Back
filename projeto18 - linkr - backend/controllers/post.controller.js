@@ -1,3 +1,5 @@
+import {getTrends} from '../repositories/getTrends';
+
 export async function createPost(req, res) {
     const { authorization } = req.headers
     const token = authorization?.replace("Bearer ", '')
@@ -41,8 +43,14 @@ export async function createPost(req, res) {
 
         try {
           const posts = await db.query("SELECT * FROM posts limit 20 desc posts.createdAt")
+
+          const arrayTrends = await getTrends()
+
+          if(arrayTrends.length === 0){
+            return res.sendStatus(404)
+          }
       
-          res.send(posts.rows)
+          res.send(posts.rows, arrayTrends)
       
         } catch (error) {
           res.status(500).send(error.message)
