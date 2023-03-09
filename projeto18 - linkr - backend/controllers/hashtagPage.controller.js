@@ -1,3 +1,4 @@
+import { db } from "../database/database.js";
 import { getPostsFromHashtag } from "../repositories/getPostsFromHashtag.js";
 import { getTrends } from "../repositories/getTrends.js"
 

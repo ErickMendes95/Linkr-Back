@@ -1,3 +1,4 @@
+import { db } from '../database/database.js';
 import {getTrends} from '../repositories/getTrends.js';
 
 export async function createPost(req, res) {
