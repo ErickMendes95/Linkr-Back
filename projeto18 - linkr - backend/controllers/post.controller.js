@@ -1,40 +1,30 @@
-
 import { db } from '../database/database.js'
 
 import urlMetadata from 'url-metadata';
 
-
 export async function createPost(req, res) {
-    const { authorization } = req.headers
-    const token = authorization?.replace("Bearer ", '')
-   
-    const { url, descriptionPost} = req.body
+  const { authorization } = req.headers
+  const token = authorization?.replace("Bearer ", '')
 
-    const {user} = res.locals
+  const { url, descriptionPost } = req.body
 
-  
-    try {
+  const { user } = res.locals
 
-      const metadata = await urlMetadata(url);
-     
-      const { image, title, description } = metadata;
-  
+  try {
 
-     await db.query('INSERT INTO urls (url, title, descriptionUrl, image) values ($1, $2, $3, $4)', [url, title, description, image ])
+    const metadata = await urlMetadata(url);
 
-      const postUrl = await db.query('SELECT * FROM urls WHERE url=$1', [url])
+    const { image, title, description } = metadata;
 
+    await db.query('INSERT INTO urls (url, title, description_url, image) values ($1, $2, $3, $4)', [url, title, description, image])
 
-      await db.query('INSERT INTO posts (description, urlId, userId) values ($1, $2, $3)', [descriptionPost, postUrl.rows[0].id, user.rows[0].id])
+    const postUrl = await db.query('SELECT * FROM urls WHERE url=$1', [url])
+
+    await db.query('INSERT INTO posts (description, urL_id, user_Id) values ($1, $2, $3)', [descriptionPost, postUrl.rows[0].id, user.rows[0].id])
 
 
-      res.sendStatus(201)
+    res.sendStatus(201)
 
-    } catch (error) {
-      console.log(error)
-      res.status(500).send("Deu um problema no servidor!")
-    }
-  }
 
   export async function getTimeline(req, res) {
 
@@ -62,6 +52,4 @@ export async function createPost(req, res) {
       
         } catch (error) {
           res.status(500).send(error.message)
-        }
-      }
-  
+}

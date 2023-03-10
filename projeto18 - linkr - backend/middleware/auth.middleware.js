@@ -10,7 +10,7 @@ export async function authValidation(req, res, next) {
       const session = await db.query('SELECT * FROM sessions WHERE token =$1', [token])
       if (session.rowCount === 0) return res.status(401).send("Não autorizado")
 
-      const user = await db.query('SELECT * FROM users WHERE id =$1', [session.rows[0].userid])
+      const user = await db.query('SELECT * FROM users WHERE id =$1', [session.rows[0].user_id])
   
       if (!user) return res.status(401).send("Não autorizado")
   
