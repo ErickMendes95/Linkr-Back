@@ -3,6 +3,6 @@ import { getUserPosts } from '../controllers/userPage.controller.js'
 
 const userPageRouter = Router()
 
-userPageRouter.get("/users/:id",getUserPosts)
+userPageRouter.get("/users/d", getUserPosts)
 
 export default userPageRouter;
