@@ -3,8 +3,6 @@ import { db } from '../database/database.js'
 
 import urlMetadata from 'url-metadata';
 
-import {getTrends} from '../repositories/getTrends.js';
-
 
 export async function createPost(req, res) {
     const { authorization } = req.headers
@@ -39,7 +37,6 @@ export async function createPost(req, res) {
   }
 
   export async function getTimeline(req, res) {
-
 
         try {
           const result = await db.query(
@@ -81,10 +78,13 @@ export async function createPost(req, res) {
               }
             };
           })
+<<<<<<< HEAD
 
           // if(rows.length === 0){
           //   return res.sendStatus(404)
           // }
+=======
+>>>>>>> main
       
           res.send(posts)
       
