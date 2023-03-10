@@ -7,8 +7,7 @@ import { postSchema } from '../models/post.schema.js'
 
 const postRouter = Router()
 
-postRouter.post("/home", validateSchema(postSchema),authValidation, createPost)
-postRouter.get("/home",getTimeline)
-
+postRouter.post("/home", authValidation, validateSchema(postSchema), createPost)
+postRouter.get("/home", authValidation, getTimeline)
 
 export default postRouter  
