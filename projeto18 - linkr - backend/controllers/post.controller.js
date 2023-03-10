@@ -25,38 +25,31 @@ export async function createPost(req, res) {
 
     res.sendStatus(201)
 
-  } catch (error) {
-    console.log(error)
-    res.status(500).send("Deu um problema no servidor!")
-  }
-}
 
-export async function getTimeline(req, res) {
+  export async function getTimeline(req, res) {
 
-
-  try {
-    const result = await db.query(
-      'SELECT posts.*, urls.id AS url_id, urls.url AS url, urls.title AS title, urls.description_url AS description_url, urls.image AS image, users.id AS user_id, users.username AS name FROM posts JOIN urls ON posts.url_id = urls.id JOIN users ON posts.user_id = users.id ORDER BY posts.created_at DESC LIMIT 20')
-
-    const posts = result.rows.map((p) => {
-      return {
-        id: p.id,
-        user: p.name,
-        descriptionPost: p.description,
-        urlId: p.urlid,
-        urlPost: {
-          id: p.url_id,
-          url: p.url,
-          title: p.title,
-          description: p.description_url,
-          image: p.image
-        }
-      };
-    })
-
-    res.send(posts)
-
-  } catch (error) {
-    res.status(500).send(error.message)
-  }
+        try {
+          const result = await db.query(
+            'SELECT posts.*, urls.id AS url_id, urls.url AS url, urls.title AS title, urls.descriptionUrl AS description_url, urls.image AS image, users.id AS user_id, users.username AS name FROM posts JOIN urls ON posts.urlId = urls.id JOIN users ON posts.userId = users.id ORDER BY posts.createdAt DESC LIMIT 20')
+      
+          const posts = result.rows.map((p) => {
+            return {
+              id: p.id,
+              user: p.name,
+              descriptionPost: p.description,
+              urlId: p.urlid,
+              urlPost: {
+                id: p.url_id,
+                url: p.url,
+                title: p.title,
+                description: p.description_url,
+                image: p.image
+              }
+            };
+          })
+      
+          res.send(posts)
+      
+        } catch (error) {
+          res.status(500).send(error.message)
 }
