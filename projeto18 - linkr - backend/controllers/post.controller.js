@@ -78,37 +78,34 @@ export async function createPost(req, res) {
               }
             };
           })
-<<<<<<< HEAD
 
-          // if(rows.length === 0){
-          //   return res.sendStatus(404)
-          // }
-=======
->>>>>>> main
+          if(arrayTrends.length === 0){
+            return res.sendStatus(404)
+          }
       
-          res.send(posts)
+          res.send(posts, arrayTrends)
       
         } catch (error) {
           res.status(500).send(error.message)
         }
       }
 
-export async function addlikeCount(req, res) {
+// export async function addlikeCount(req, res) {
 
-  try {
+//   try {
 
-    const likeExists = await db.query(
-      `SELECT * FROM postlike WHERE user_id = $1 AND post_id = $2`,
-      [user_id, post_id]
-    );
+//     const likeExists = await db.query(
+//       `SELECT * FROM postlike WHERE user_id = $1 AND post_id = $2`,
+//       [user_id, post_id]
+//     );
 
-    if (likeExists) { 
-      return await db.query(`UPDATE postlike SET likes = likes - 1 WHERE user_id = $1 AND post_id = $2`, [user_id, post_id]);
-    } else {
-      return await db.query(`UPDATE postlike SET likes = likes + 1 WHERE user_id = $1 AND post_id = $2`, [user_id, post_id]);
-    }
-    res.status(200).send("Like adicionado com sucesso!");
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-}
+//     if (likeExists) { 
+//       return await db.query(`UPDATE postlike SET likes = likes - 1 WHERE user_id = $1 AND post_id = $2`, [user_id, post_id]);
+//     } else {
+//       return await db.query(`UPDATE postlike SET likes = likes + 1 WHERE user_id = $1 AND post_id = $2`, [user_id, post_id]);
+//     }
+//     res.status(200).send("Like adicionado com sucesso!");
+//   } catch (error) {
+//     res.status(500).send(error.message);
+//   }
+// }
