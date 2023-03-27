@@ -29,7 +29,7 @@ export async function FollowSwitch(req,res){
     try {
         
         const userId = await db.query('SELECT user_id from sessions where token = $1',[token])
-        const status = await db.query('Select status from follow where user_id=$1 AND friend_id=$2',[userId,friendId]);
+        const status = await db.query('Select status from follow where user_id=$1 AND friend_id=$2',[userId.rows[0],friendId]);
 
         if(status.rowCount > 0){
             return res.send("User is already following this person");
@@ -53,7 +53,7 @@ export async function UnfollowSwitch(req,res){
     try {
         
         const userId = await db.query('SELECT user_id from sessions where token = $1',[token])
-        const status = await db.query('Select status from follow where user_id=$1 AND friend_id=$2',[userId,friendId]);
+        const status = await db.query('Select status from follow where user_id=$1 AND friend_id=$2',[userId.rows[0],friendId]);
 
         if(status.rowCount === 0){
             return res.send("User isn't following this person");
