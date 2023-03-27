@@ -73,9 +73,9 @@ export async function createPost(req, res) {
                 description: p.description_url,
                 image: p.image
               },
-              postLike: {
-                likes: p.likes
-              }
+              postLike: 
+                p.likes ? { likes: p.likes } : null
+              
             };
           })
       
@@ -105,3 +105,37 @@ export async function createPost(req, res) {
 //     res.status(500).send(error.message);
 //   }
 // }
+
+
+export async function updatePost(req, res) {
+  
+    const id = req.params.id;
+    const { description } = req.body
+  
+    try {
+      await db.query(
+        `UPDATE posts SET description = $1 WHERE id = $2`,
+        [description, id]
+      );
+      res.sendStatus(200);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  
+}
+
+export async function destroy(req, res) {
+  const { id } = req.params
+  try {
+    const {rowCount } = await db.query('SELECT * FROM posts WHERE id=$1', [id])
+
+    if (rowCount === 0) return res.sendStatus(404)
+
+    await db.query("DELETE FROM posts WHERE id=$1", [id])
+
+    res.sendStatus(200)
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+
+}
